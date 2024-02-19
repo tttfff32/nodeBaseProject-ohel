@@ -5,10 +5,6 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     try {
-        // const { business_id } = req.query;
-        // if (!business_id) {
-        //     res.status(400).send('no business_id provided as query param');
-        // }
         const meetings = await MeetingsService.getMeetings();
         res.send(meetings);
     } catch (error) {
@@ -30,11 +26,12 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const { meeting } = req.body;
         const { id } = req.params;
-        if (!id || !meeting) {
+        const { typeOfService, Date, Time, NameOfUser,  PhoneOfUser, Note } = req.body;
+        if (!typeOfService || !Date || !Time || !NameOfUser || !PhoneOfUser || !Note ||!id ) {
             return res.status(400).send('no meeting or no id provided');
         }
+        const meeting ={ typeOfService, Date, Time, NameOfUser,  PhoneOfUser, Note}
         const _meeting = await MeetingsService.updateMeeting(id, meeting);
         return res.send(_meeting);
     } catch (error) {

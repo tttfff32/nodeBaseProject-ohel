@@ -38,13 +38,16 @@ const getMeeting = async (id) => {
 }
 
 const getMeetings = async () => {
+  
     const meetings = await getData();
-    // const _meetings = await meetings.filter(m => m.businessId === businessId);
-    return meetings;
+    const SortMeetings = meetings.sort((a,b) => {
+        return a.NameOfUser.localeCompare(b.NameOfUser);
+      });
+          return SortMeetings;
 }
 
 const deleteMeeting = async (id) => {
-    const meetings = await getData();5
+    const meetings = await getData();
     const index = await meetings.findIndex(m => m.id === id);
     meetings.splice(index, 1);
     await updateData(meetings);
